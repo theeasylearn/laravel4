@@ -1,0 +1,26 @@
+
+> @ dev E:\wamp64\www\laravel4
+> npm run development
+
+
+> @ development E:\wamp64\www\laravel4
+> cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js
+
+ ERROR  Failed to compile with 2 errors10:14:40 AM
+
+These dependencies were not found:
+
+* E:\wamp64\www\laravel4\resources\js\app.js in multi ./resources/js/app.js ./resources/sass/app.scss
+* E:\wamp64\www\laravel4\resources\sass\app.scss in multi ./resources/js/app.js ./resources/sass/app.scss
+
+To install them, you can run: npm install --save E:\wamp64\www\laravel4\resources\js\app.js E:\wamp64\www\laravel4\resources\sass\app.scss
+     Asset      Size   Chunks             Chunk Names
+/js/app.js  4.16 KiB  /js/app  [emitted]  /js/app
+
+ERROR in multi ./resources/js/app.js ./resources/sass/app.scss
+Module not found: Error: Can't resolve 'E:\wamp64\www\laravel4\resources\js\app.js' in 'E:\wamp64\www\laravel4'
+ @ multi ./resources/js/app.js ./resources/sass/app.scss /js/app[0]
+
+ERROR in multi ./resources/js/app.js ./resources/sass/app.scss
+Module not found: Error: Can't resolve 'E:\wamp64\www\laravel4\resources\sass\app.scss' in 'E:\wamp64\www\laravel4'
+ @ multi ./resources/js/app.js ./resources/sass/app.scss /js/app[1]
