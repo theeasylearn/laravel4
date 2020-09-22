@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Category;
 
 class Product extends Model
 {
@@ -17,5 +18,8 @@ class Product extends Model
     {
         return date("d-m-Y h:i:s A",strtotime($this->updated_at));
     }
-    
+    public function category()
+    {
+        return $this->belongsTo('App\Category','categoryid');
+    }
 }

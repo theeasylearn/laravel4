@@ -28,7 +28,7 @@
                             <td>{{$count++}}</td>
                             <td>{{$row->title}}</td>
                             <td>{{$row->price}}</td>
-                            <td>{{$row->categoryid}}</td>
+                            <td>{{$row->category->title}}</td>
                             <td>{{$row->getCreationDate()}}</td>
                             <td>{{$row->getUpdationDate()}}</td>
                         </tr>

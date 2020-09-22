@@ -14,8 +14,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-       //$result = Product::all()->sortBy("id"); //will run select * from product table order by id 
-       $result = Product::all()->sortByDesc("id"); //will run select * from product table order by id desc
+       $result = Product::with('category')->get();
+       //echo json_encode($result);
        return view("products")->with("result",$result);
     }
 
