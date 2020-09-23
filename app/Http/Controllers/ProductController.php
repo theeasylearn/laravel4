@@ -14,9 +14,23 @@ class ProductController extends Controller
      */
     public function index()
     {
-       $result = Product::with('category')->get();
-       //echo json_encode($result);
-       return view("products")->with("result",$result);
+       $_SESSION['data'] = array();
+       $rows= Product::with('category')->get()
+            ->map(function ($rows) {
+                array_push($_SESSION['data'],array(
+                    'id' => $rows->id,
+                    'title' => $rows->title,
+                    'price' => $rows->price,
+                    'photo' => $rows->price,
+                    'categorytitle' => $rows->category->title,
+                    'created_at' => $rows->getCreationDate(),
+                    'updated_at' => $rows->getUpdationDate(),
+
+                ));
+            });
+       $data = $_SESSION['data'];
+       unset($_SESSION['data']);
+       return view("products")->with("result",$data);
     }
 
     /**

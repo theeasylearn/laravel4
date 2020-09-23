@@ -16,7 +16,8 @@
                             <th>Sr No</th>
                             <th>Title</th>
                             <th>Price</th>
-                            <th>Category Id</th>
+                            <th>Photo</th>
+                            <th>Category</th>
                             <th>Created At</th>
                             <th>Updated At</th>
                         </tr>
@@ -26,11 +27,12 @@
                         @foreach($result as $row)
                         <tr>
                             <td>{{$count++}}</td>
-                            <td>{{$row->title}}</td>
-                            <td>{{$row->price}}</td>
-                            <td>{{$row->category->title}}</td>
-                            <td>{{$row->getCreationDate()}}</td>
-                            <td>{{$row->getUpdationDate()}}</td>
+                            <td>{{$row['title']}}</td>
+                            <td>{{$row['price']}}</td>
+                            <td></td>
+                            <td>{{$row['categorytitle']}}</td>
+                            <td>{{$row['created_at']}}</td>
+                            <td>{{$row['updated_at']}}</td>
                         </tr>
                         @endforeach
                     </table>
