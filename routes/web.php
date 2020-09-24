@@ -355,5 +355,8 @@ Route::post("/createcategory","CategoryController@store");
 Route::post("/updatecategory","CategoryController@update");
 //product routes
 Route::get("/product","ProductController@index");
+Route::get("/insert_product","ProductController@create");
+Route::post("/insert_product","ProductController@store");
+Route::get("/delete_product","ProductController@store");
 
 

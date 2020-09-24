@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Category;
 use Illuminate\Http\Request;
+use App\MyClass;
 
 class ProductController extends Controller
 {
@@ -21,7 +23,7 @@ class ProductController extends Controller
                     'id' => $rows->id,
                     'title' => $rows->title,
                     'price' => $rows->price,
-                    'photo' => $rows->price,
+                    'photo' => $rows->photo,
                     'categorytitle' => $rows->category->title,
                     'created_at' => $rows->getCreationDate(),
                     'updated_at' => $rows->getUpdationDate(),
@@ -40,7 +42,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        
+        $result = Category::get(["id","title"]);
+        return view("insert_product")->with("categories",$result);
     }
 
     /**
@@ -51,7 +55,11 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = MyClass::GetFormDataWithFile($request,'filphoto','photo');
+        $product = Product::create($data); //ORM 
+        /* move uploaded file into project directory */
+        $request->file('filphoto')->move(public_path('images/product'),$data['photo']);
+        return back()->with('message',"Product added successfully");
     }
 
     /**

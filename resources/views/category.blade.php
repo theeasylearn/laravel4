@@ -76,7 +76,9 @@
                                 <tr>
                                     <td>{{ $count++}}</td>
                                     <td>{{ $category->title}}</td>
-                                    <td><img src='/images/category/{{$category->photo}}' class='img-thumbnail myimage'  /></td>
+                                    <td>
+                                    <img src='/images/category/{{$category->photo}}' class='img-thumbnail myimage'  />
+                                    </td>
                                     <td>{{ $live[$category->islive]}}</td>
                                     <td><a href="/category/edit/{{$category->id}}">Edit</a></td>
                                     <td><a href="/category/delete/{{$category->id}}/{{$category->photo}}">Delete</a></td>

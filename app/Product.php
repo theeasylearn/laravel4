@@ -8,7 +8,7 @@ use App\Category;
 class Product extends Model
 {
     protected $table = 'product';
-    protected $fillable = ['title','price','quantity','photo','detail'];
+    protected $fillable = ['categoryid','title','price','quantity','photo','detail'];
 
     public function getCreationDate()
     {
