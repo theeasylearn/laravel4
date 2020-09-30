@@ -22,6 +22,9 @@
                     <a href="insert_product" class="btn btn-primary">Add new Product</a>
                 </p>
                 <div class="card">
+                <div class="text-info text-center">
+                            {{ Session::get("message") }}    
+                </div>
                     <table class="table table-striped table-bordered">
                         <tr>
                             <th>Sr No</th>
@@ -49,10 +52,10 @@
                             <td>{{$row['created_at']}}</td>
                             <td>{{$row['updated_at']}}</td>
                             <td>
-                            <a href="" class='btn btn-warning'>Edit</a>
+                            <a href="/product/edit/{{$row['id']}}/" class='btn btn-warning'>Edit</a>
                             </td>
                             <td>
-                            <a href="" class='btn btn-danger'>Delete</a>
+                                <a href="/product/delete/{{$row['id']}}/{{$row['photo']}}" class="btn btn-danger">Delete</a>
                             </td>
                         </tr>
                         @endforeach

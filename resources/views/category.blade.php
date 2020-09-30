@@ -46,7 +46,8 @@
                                 <input id="btnsubmit" class="btn btn-primary btn-block btn-lg" type="submit" name="btnsubmit"  value="Add new category" />
                             </div>
                             <div class="text-info text-center">
-                            {{ Session::get("message") }}               
+                            {{ Session::get("message") }}    
+                            </div>           
                         </form>
                     </div>
                 </div>

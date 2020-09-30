@@ -9,7 +9,6 @@ class Product extends Model
 {
     protected $table = 'product';
     protected $fillable = ['categoryid','title','price','quantity','photo','detail'];
-
     public function getCreationDate()
     {
         return date("d-m-Y h:i:s A",strtotime($this->created_at));
@@ -21,6 +20,5 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo('App\Category','categoryid'); 
-    
     }
 }
