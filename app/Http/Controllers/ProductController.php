@@ -64,11 +64,25 @@ class ProductController extends Controller
 
     public function update(Request $request)
     {
-        return "we are here";
-       /*
-        $data = MyClass::GetFormDataWithFile($request,'filphoto','photo');
-        $product = Product::save($data); //ORM 
-        $request->file('filphoto')->move(public_path('images/product'),$data['photo']);
+        $data = MyClass::GetFormDataWithFile($request,'filphoto','photo',$request->oldphoto);
+        $product = Product::find($request->id);
+        /* $product->categoryid = $data['categoryid'];
+        $product->title = $data['title'];
+        $product->price = $data['price'];
+        $product->quantity = $data['quantity'];
+        $product->photo = $data['photo'];
+        $product->detail = $data['detail'];
+        $product->save(); //update record in table */
+        unset($data['_token'],$data['oldphoto']);
+        Product::where('id', $request->id)->update($data);
+        if($request->file('filphoto')!= null)
+        {
+            //delete old photo
+            $FileName = public_path('images/product/') . $request->oldphoto;
+            unlink($FileName);
+            //move photo from temp directory to project directory 
+            $request->file('filphoto')->move(public_path('images/product'),$data['photo']);
+        }
         $_SESSION['data'] = array();
         $rows= Product::with('category')->get()
              ->map(function ($rows) {
@@ -80,13 +94,11 @@ class ProductController extends Controller
                      'categorytitle' => $rows->category->title,
                      'created_at' => $rows->getCreationDate(),
                      'updated_at' => $rows->getUpdationDate(),
- 
                  ));
              });
         $data = $_SESSION['data'];
         unset($_SESSION['data']);
         return view("products")->with("result",$data)->with('message',"Product Updated successfully");
-       */
     }
 
     public function destroy(Request $request)

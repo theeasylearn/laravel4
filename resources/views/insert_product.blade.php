@@ -21,9 +21,10 @@
                     <div class="card-header bg-primary text-white">
                     @php 
                         $Label = "Add new Product";
-                        $Action = "insert_product";
+                        $Action = "/insert_product";
                         $ButtonLabel = "Save";
-                        $Title = $Detail = $Price = $Photo = $Quantity = $CategoryId = $ProductId = null;
+                        $required = "required";
+                        $Title = $Detail = $Price = $Photo = $Quantity = $CategoryId = $ProductId  = null;
                         if(isset($products)==true)
                         {
                             foreach($products as $product)
@@ -31,7 +32,7 @@
 
                             }
                             $Label = "Edit Product";
-                            $Action = "update_product";
+                            $Action = "/update_product";
                             $ButtonLabel = "Save Changes";
                             $Title = $product->title;
                             $Detail = $product->detail;
@@ -40,6 +41,8 @@
                             $Price = $product->price;
                             $CategoryId = $product->categoryid;
                             $ProductId = $product->id;
+                            $required = null;
+                
                         }    
 
                     @endphp
@@ -79,9 +82,10 @@
                             </div>
                             <div class="form-group">
                                 <label for="filphoto">Photo</label>
-                                <input id="filphoto" class="form-control-file" type="file" name="filphoto" required accept="image/*" /> <br>
+                                <input id="filphoto" class="form-control-file" type="file" name="filphoto" {{$required}} accept="image/*" /> <br>
                                 @if(isset($products)==true)
                                     <img src="/images/product/{{$Photo}}" class='img-thumbnail myimage'  />
+                                    <input type="hidden" name="oldphoto" value="{{$Photo}}" />
                                 @endif
                             </div>
                             <div class="form-group">
