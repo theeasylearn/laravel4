@@ -360,3 +360,10 @@ Route::post("/insert_product","ProductController@store");
 Route::get("/product/delete/{id}/{photo}","ProductController@destroy");
 Route::get("/product/edit/{id}","ProductController@edit");
 Route::post("/update_product","ProductController@update");
+Route::get("/mail_text","MyMailController@text");
+Route::get("/mail_html","MyMailController@html");
+Route::get("/mail_attach","MyMailController@attach");
+Route::get("/compose_mail",function(){
+    return view("compose-mail");
+});
+Route::post("/sendmail","MyMailController@sendmail");

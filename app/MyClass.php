@@ -18,4 +18,12 @@ class MyClass
         }
         return $data;
     }
+
+    public static function getSenderEmail(){
+        return "demoblahblahblah@gmail.com";
+    }
+
+    public static function getSenderName(){
+        return "The EasyLearn Academy";
+    }
 }
