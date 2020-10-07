@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Pincode;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -367,3 +368,16 @@ Route::get("/compose_mail",function(){
     return view("compose-mail");
 });
 Route::post("/sendmail","MyMailController@sendmail");
+
+/* AJAX Routes */
+
+Route::get("/pincode",function (){
+    $pincodes = Pincode::all();
+    //echo json_encode($pincodes);
+    return view("pincode")->with("pincodes",$pincodes);
+});
+
+Route::post("/pincode/create",function(){
+    $pincode = Pincode::create($request->all());
+    return Response::json($pincode);
+});
