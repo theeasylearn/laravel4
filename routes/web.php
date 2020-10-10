@@ -377,7 +377,12 @@ Route::get("/pincode",function (){
     return view("pincode")->with("pincodes",$pincodes);
 });
 
-Route::post("/pincode/create",function(){
+Route::post("/pincode/create",function(Request $request){
     $pincode = Pincode::create($request->all());
+    return Response::json($pincode);
+});
+
+Route::delete("/pincode/{pincode_id}",function($pincode_id){
+    $pincode = Pincode::destroy($pincode_id);
     return Response::json($pincode);
 });

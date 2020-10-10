@@ -14,7 +14,7 @@ class Pincode extends Migration
             $table->string("zipcode");
             $table->string("city");
             $table->timestamp("created_at")->nullable();
-            $table->timestamp("modified_at")->nullable();
+            $table->timestamp("updated_at")->nullable();
         });
     }
 
