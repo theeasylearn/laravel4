@@ -99,7 +99,6 @@
                         'x-csrf-token':token
                     }
                 })
-                e.preventDefault();
                 $.ajax({
                     type: type,
                     data: formdata,
@@ -127,8 +126,51 @@
                 $("#exampleModal").modal('hide'); // hide modal dialogbox
             });
             
-            $("body").on("click",".delete",function(e){
+            $("body").on("click",".delete",function(e)
+            {
+                var response = confirm('are you sure you want to delete this?');
+                if(response==false)
+                    return;
+                var pincode_id = $(this).attr("data-id");
+                var row = "#pincode-" + pincode_id;
+                var ajaxURL = "php/pincode/" + pincode_id;
+                var token = $("input[name='_token']").val();
+                alert(token);
+                var type = "delete";
+                $.ajaxSetup({
+                    headers:{
+                        'x-csrf-token':token
+                    }
+                })
+                $.ajax({
+                    type: type,
+                    url: ajaxURL,
+                    datatype: 'json',
+                    success: function(data){
+                        //console.log(JSON.stringify(data)); 
+                        $(row).remove();
+                    },
+                    
+                    error: function(error){
+                        console.log(JSON.stringify(data)); 
+                    },
+                });
+            });
+            $("body").on("click",".edit",function(e)
+            {
+                var pincode_id = $(this).attr("data-id");
+                var row = "#pincode-" + pincode_id;
                 
+                var city = $(row).find("td:eq(0)").html();
+                var zipcode = $(row).find("td:eq(1)").html();
+                
+                $('#exampleModal').modal('show'); //show dialogbox 
+                $("#city").val(city); //fill value in textbox whose id is city
+                $("#zipcode").val(zipcode); //fill value in textbox whose id is zipcode
+                $("#btnsave").val("update");
+                $("#pincode_id").val("pincode_id");
+                $("#btnsave").html("Save changes");
+                $("#exampleModalLabel").html("Edit Pincode");
             });
         });
     </script>

@@ -381,8 +381,27 @@ Route::post("/pincode/create",function(Request $request){
     $pincode = Pincode::create($request->all());
     return Response::json($pincode);
 });
-
+//it will delete pincode from pincode table
 Route::delete("/pincode/{pincode_id}",function($pincode_id){
     $pincode = Pincode::destroy($pincode_id);
     return Response::json($pincode);
 });
+
+//it will get unique pincode detail for edit operation
+Route::get("/pincode/{pincode_id}",function($pincode_id){
+    $pincode = Pincode::find($pincode_id);
+    return Response::json($pincode);
+});
+
+//it will update specific pincode detail
+Route::put("/pincode/{pincode_id}",function($request,$pincode_id){
+    $pincode = Pincode::find($pincode_id);
+    $pincode->city = $request->city;
+    $pincode->zipcode = $request->zipcode;
+    $pincode->save(); //update query will run which will update selected pincode
+    return Response::json($pincode);
+});
+
+
+
+
