@@ -394,7 +394,7 @@ Route::get("/pincode/{pincode_id}",function($pincode_id){
 });
 
 //it will update specific pincode detail
-Route::put("/pincode/{pincode_id}",function($request,$pincode_id){
+Route::put("/pincode/{pincode_id}",function(Request $request,$pincode_id){
     $pincode = Pincode::find($pincode_id);
     $pincode->city = $request->city;
     $pincode->zipcode = $request->zipcode;

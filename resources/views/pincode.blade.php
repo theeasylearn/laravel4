@@ -87,7 +87,9 @@
                 var state = $("#btnsave").val(); //
                 if(state!="add")
                 {
-                    ajaxURL = "pincode/update/";
+                    var pincode_id = $("#pincode_id").val();
+                    ajaxURL = "/pincode/" + pincode_id;
+                    type = "put";
                 }
                 var formdata = {
                     city : $("#city").val(),
@@ -104,6 +106,9 @@
                     data: formdata,
                     url: ajaxURL,
                     datatype: 'json',
+                    beforeSend: function( xhr ) {
+                        alert(ajaxURL + " " + type);
+                     },
                     success: function(data){
                         console.log(JSON.stringify(data)); 
                         var row = null;
@@ -116,10 +121,14 @@
                             row += "<td><a data-id=" + data.id + " href='#' class='btn btn-danger delete'>delete</a></td></tr>";   
                             $("#pincode").prepend(row);
                         }
+                        else 
+                        {
+                            $("#btnsave").val("add");
+                            $("#pincode_id").val("0");
+                        }
                     },
-                    
                     error: function(error){
-                        console.log(JSON.stringify(data)); 
+                        console.log(error); 
                     },
                 });
                 $("#pincodeform").trigger("reset"); //reset(clear) form
@@ -168,7 +177,7 @@
                 $("#city").val(city); //fill value in textbox whose id is city
                 $("#zipcode").val(zipcode); //fill value in textbox whose id is zipcode
                 $("#btnsave").val("update");
-                $("#pincode_id").val("pincode_id");
+                $("#pincode_id").val(pincode_id);
                 $("#btnsave").html("Save changes");
                 $("#exampleModalLabel").html("Edit Pincode");
             });
