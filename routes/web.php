@@ -368,15 +368,11 @@ Route::get("/compose_mail",function(){
     return view("compose-mail");
 });
 Route::post("/sendmail","MyMailController@sendmail");
-
-/* AJAX Routes */
-
 Route::get("/pincode",function (){
     $pincodes = Pincode::all();
     //echo json_encode($pincodes);
     return view("pincode")->with("pincodes",$pincodes);
 });
-
 Route::post("/pincode/create",function(Request $request){
     $pincode = Pincode::create($request->all());
     return Response::json($pincode);
@@ -401,7 +397,3 @@ Route::put("/pincode/{pincode_id}",function(Request $request,$pincode_id){
     $pincode->save(); //update query will run which will update selected pincode
     return Response::json($pincode);
 });
-
-
-
-

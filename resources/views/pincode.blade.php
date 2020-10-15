@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AJAX Tutorials</title>
     <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" />
+    <link href="//cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" rel="stylesheet" />
+    
 </head>
 <body>
     <div class="container">
@@ -19,7 +21,7 @@
                             <button type=button class='btn btn-primary'
                             data-toggle="modal" data-target="#exampleModal">Add pincode</button>
                         </p>
-                        <table class="table table-bordered table-striped m-1" width='100%'>
+                        <table id="myTable" class="table table-bordered table-striped m-1" width='100%'>
                             <thead>
                                 <tr>
                                     <th>City</th>
@@ -79,8 +81,10 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="{{ asset('js/popper.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
+    <script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function(){
+            $('#myTable').DataTable();
             $("#btnsave").click(function(e){
                 var ajaxURL = "/pincode/create/";
                 var type = "post";
@@ -106,9 +110,9 @@
                     data: formdata,
                     url: ajaxURL,
                     datatype: 'json',
-                    beforeSend: function( xhr ) {
-                        alert(ajaxURL + " " + type);
-                     },
+                    // beforeSend: function( xhr ) {
+                    //     alert(ajaxURL + " " + type);
+                    //  },
                     success: function(data){
                         console.log(JSON.stringify(data)); 
                         var row = null;
@@ -123,16 +127,20 @@
                         }
                         else 
                         {
+                            row = "#pincode-" + pincode_id;
+                            $(row).find("td:eq(0)").html(formdata.city);
+                            $(row).find("td:eq(1)").html(formdata.zipcode);
                             $("#btnsave").val("add");
                             $("#pincode_id").val("0");
                         }
+                        $("#pincodeform").trigger("reset"); //reset(clear) form
+                        $("#exampleModal").modal('hide'); // hide modal dialogbox
                     },
                     error: function(error){
                         console.log(error); 
                     },
                 });
-                $("#pincodeform").trigger("reset"); //reset(clear) form
-                $("#exampleModal").modal('hide'); // hide modal dialogbox
+               
             });
             
             $("body").on("click",".delete",function(e)
@@ -142,9 +150,8 @@
                     return;
                 var pincode_id = $(this).attr("data-id");
                 var row = "#pincode-" + pincode_id;
-                var ajaxURL = "php/pincode/" + pincode_id;
+                var ajaxURL = "/pincode/" + pincode_id;
                 var token = $("input[name='_token']").val();
-                alert(token);
                 var type = "delete";
                 $.ajaxSetup({
                     headers:{
@@ -161,7 +168,7 @@
                     },
                     
                     error: function(error){
-                        console.log(JSON.stringify(data)); 
+                        console.log(error); 
                     },
                 });
             });
