@@ -397,3 +397,37 @@ Route::put("/pincode/{pincode_id}",function(Request $request,$pincode_id){
     $pincode->save(); //update query will run which will update selected pincode
     return Response::json($pincode);
 });
+//function go get a quote via api 
+function getQuote()
+{
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt_array($curl, [
+        CURLOPT_URL => "https://rapidapi.p.rapidapi.com/quote",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_HTTPHEADER => [
+            "x-rapidapi-host: quotes21.p.rapidapi.com",
+            "x-rapidapi-key: 694bcb6139msh1a7bedb24911708p187601jsnbba7adb7b54f"
+        ],
+    ]);
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    curl_close($curl);
+    if ($err)
+        return array("error"=>"sorry we got some problem...");
+    else
+        return $response;
+} //end of function 
+Route::get("/myapicall",function(){
+    $response = json_decode(getQuote());
+    //var_dump($response);
+    //echo $response->author;
+    ///echo "<br/> " . $response->quote;
+    return view("quote")->with("quote",$response->quote)->with("author",$response->author);
+});
