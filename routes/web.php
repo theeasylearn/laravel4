@@ -1,7 +1,10 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Http\Request;
 use App\Pincode;
+use Illuminate\Http\Response;
+date_default_timezone_set("asia/kolkata");
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +15,7 @@ use App\Pincode;
 | contains the "web" middleware group. Now create something great!
 |
 */
-date_default_timezone_set("asia/kolkata");
+
 Route::get('/', function () {
     return view('welcome');
     //return "Welcome to the world of laravel";
@@ -430,4 +433,58 @@ Route::get("/myapicall",function(){
     //echo $response->author;
     ///echo "<br/> " . $response->quote;
     return view("quote")->with("quote",$response->quote)->with("author",$response->author);
+});
+
+
+Route::get("/createcookie",function(){
+    return view("createcookie");
+});
+
+Route::post("/createcookie",function(Request $request){
+    //let us create cookie
+    $name = $request->txtname;
+    $value  = $request->txtvalue;
+    $minute = $request->txtminute;
+    $response = new Response("Cookie created $name with  $value for duration $minute");
+    return $response->withCookie(cookie($name,$value,$minute));
+});
+
+Route::get("/getcookie/{name}",function(Request $request,$name){
+    $value = $request->cookie($name);
+    ///echo "Value of $name cookie is $value";
+    return view("getcookie")->with("name",$name);
+});
+
+
+Route::get("/deletecookie/{name}",function(Request $request,$name)
+{
+    $response = new Response("Cookie $name deleted successfully");
+    return $response->withCookie(cookie($name,null,0));
+});
+
+
+Route::get("/createsession",function(){
+    return view("createsession");
+});
+
+Route::post("/createsession",function(Request $request){
+    $name = $request->txtname;
+    $value  = $request->txtvalue;
+    $request->session()->put($name,$value);
+    $response = new Response("Session created $name with  $value");
+    return $response;
+});
+
+Route::get("/getsession/{name}",function(Request $request,$name){
+    $value = $request->session()->get($name);
+    return view("getsession")->with("name",$name)->with("value",$value);
+});
+
+
+Route::get("/deletesession/{name}",function(Request $request,$name)
+{
+    $request->session()->forget($name);
+    $response = new Response("session $name deleted successfully");
+    return $response;
+
 });
