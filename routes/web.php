@@ -488,3 +488,42 @@ Route::get("/deletesession/{name}",function(Request $request,$name)
     return $response;
 
 });
+
+Route::get("/array_add",function(Request $request)
+{
+        $array=Arr::add(["name" => "ankit"],"surname","patel");
+        $array=Arr::add($array,"age",34);
+        $array=Arr::add($array,"gender",true);
+        var_dump($array);
+});
+
+Route::get("/array_filter/{key}",function(Request $request,$key)
+{   
+        $array = ['name'=>'ankit','surname'=>'patel',"gender"=>true,"age"=>34];
+        $exists = Arr::exists($array,$key);
+        if($exists==true)
+        {
+            $filtered_array = Arr::except($array,$key);
+            var_dump($filtered_array);
+        }
+        else 
+        {
+            echo "key not found";
+        }
+});
+
+Route::get("/array_filter2/",function(Request $request)
+{   
+    $array=[100, 200, 300, 400, 500, 600, 1200, 2500];
+    $first=Arr::first($array, function ($value, $key) 
+    {
+    
+        if($value >= 500)
+            echo "<br/> $value";
+    });
+    echo $first;
+
+});
+
+Route::get("/getdate","HelperController@GetDate");
+Route::get("/gettime","HelperController@GetTime");
