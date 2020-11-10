@@ -352,13 +352,13 @@ Route::get("/createuser",function(Request $request)
     return view("createuser");
 });
 Route::post("/createuser","CreateUserController@store");
-Route::get("/category","CategoryController@view");
+Route::get("/category","CategoryController@view")->middleware(['MyLoggerMiddleware']);
 Route::get("/category/delete/{id}/{file}","CategoryController@delete");
 Route::get("/category/edit/{id}","CategoryController@edit");
 Route::post("/createcategory","CategoryController@store");
 Route::post("/updatecategory","CategoryController@update");
 //product routes
-Route::get("/product","ProductController@index");
+Route::get("/product","ProductController@index")->middleware(['MyLoggerMiddleware']);;
 Route::get("/insert_product","ProductController@create");
 Route::post("/insert_product","ProductController@store");
 Route::get("/product/delete/{id}/{photo}","ProductController@destroy");
@@ -495,7 +495,7 @@ Route::get("/array_add",function(Request $request)
         $array=Arr::add($array,"age",34);
         $array=Arr::add($array,"gender",true);
         var_dump($array);
-});
+})->middleware(['down.for.maintainance']);
 
 Route::get("/array_filter/{key}",function(Request $request,$key)
 {   
@@ -510,7 +510,7 @@ Route::get("/array_filter/{key}",function(Request $request,$key)
         {
             echo "key not found";
         }
-});
+})->middleware(['down.for.maintainance']);
 
 Route::get("/array_filter2/",function(Request $request)
 {   
@@ -523,7 +523,7 @@ Route::get("/array_filter2/",function(Request $request)
     });
     echo $first;
 
-});
+})->middleware(['down.for.maintainance']);
 
 Route::get("/getdate","HelperController@GetDate");
 Route::get("/gettime","HelperController@GetTime");

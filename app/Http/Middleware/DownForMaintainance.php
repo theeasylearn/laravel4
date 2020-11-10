@@ -16,8 +16,8 @@ class DownForMaintainance
      */
     public function handle($request, Closure $next)
     {
-        //return response()->view('503',[], 500);
-        return $next($request); 
+        return response()->view('503',[], 500);
+        //return $next($request); 
         //it will call next middleware but we put this line in comment because we are developing downfor maintainance middleware
     }
 }
